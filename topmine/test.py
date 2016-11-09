@@ -1,8 +1,15 @@
 import re
 import string
 import phrase_mining as pm
+import argparse
+import pickle
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='test topmine on a book')
+    parser.add_argument('-t', '--threshold', type=int)
+    parser.add_argument('-d', '--document', type=int)
+    args = parser.parse_args()
     splits = r'(?:\d[,.:]|[^,.:])*(?:[,.:]|$)'
     table = {ord(c): None for c in string.punctuation}
     table[ord('\n')] = ' '
@@ -12,7 +19,7 @@ if __name__ == '__main__':
     corpus = [[y for y in x if y != ''] for x in corpus]
     counter = pm.phrase_frequency(corpus, min_support=0)
     l = sum([len(d) for d in corpus])
-    document = corpus[405]
     result = pm.segment_document(
-        document=document, threshold=3, counter=counter, l=l)
+        document=corpus[args.document], threshold=args.threshold,
+        counter=counter, l=l)
     print(result)
