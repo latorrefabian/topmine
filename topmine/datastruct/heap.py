@@ -79,6 +79,8 @@ class Heap(object):
         # start at last parent and go left one node at a time
         for index in range(n//2, -1, -1):
             self.__siftdown(index)
+        for i, node in enumerate(self.heap):
+            node.index = i
         return
 
 

@@ -1,5 +1,6 @@
 import pdb
 from collections import Counter
+from itertools import chain
 import copy
 import math
 import datastruct
@@ -36,13 +37,17 @@ class Token(datastruct.Node):
         self.string = string
 
     def merge(self):
+        '''
+        merges one node with the next and pops such node.
+        returns the popped node
+        '''
         if self.next_node:
-            next_node = self.next_node
-            self.string += ' ' + next_node.string
-            self.next_node = next_node.next_node
+            pop_node, self.next_node = (
+                self.next_node, self.next_node.next_node)
+            self.string += ' ' + pop_node.string
         else:
             raise IndexError('impossible to merge the last node')
-        return next_node
+        return pop_node
 
     def calculate_key(self, counter, l):
         if self.next_node:
@@ -67,12 +72,12 @@ def segment_document(document, threshold, counter, l):
     linkedlist = datastruct.LinkedList(nodes=tokens)
     recalculate_keys(linkedlist, counter, l)
     heap = datastruct.Heap(nodes=tokens)
-    while segment_once(heap, threshold):
+    while segment_once(heap, threshold, counter, l):
         pass
     return [x.string for x in linkedlist]
 
 
-def segment_once(heap, threshold):
+def segment_once(heap, threshold, counter, l):
     max_node = heap.pop_heap()
     if max_node.key >= threshold:
         merged_node = max_node.merge()

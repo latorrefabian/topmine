@@ -58,7 +58,7 @@ class LinkedList(object):
         return ListIterator(self.first_node)
 
 
-def ListIterator(object):
+class ListIterator(object):
     def __init__(self, node):
         self.current = node
 
@@ -68,6 +68,5 @@ def ListIterator(object):
     def __next__(self):
         if self.current is None:
             raise StopIteration()
-        node = self.current
-        self.current = self.current.next
+        node, self.current = self.current, self.current.next_node
         return node
