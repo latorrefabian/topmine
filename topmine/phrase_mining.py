@@ -94,8 +94,6 @@ def segment_once(heap, threshold, counter, l):
         return False
 
 
-
-
 def _significance(a, b, counter, l):
     ab = counter[' '.join([a, b])]
     return (ab - (counter[a] * counter[b]) / l) / math.sqrt(ab)
