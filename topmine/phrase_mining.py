@@ -2,7 +2,8 @@ import pdb
 from collections import Counter
 import copy
 import math
-import datastruct as ds
+import datastruct
+
 
 def phrase_frequency(corpus, min_support):
     D = copy.copy(corpus)
@@ -29,7 +30,7 @@ def phrase_frequency(corpus, min_support):
     return counter
 
 
-class Token(ds.node.Node):
+class Token(datastruct.Node):
     def __init__(self, string):
         super().__init__()
         self.string = string
@@ -52,6 +53,7 @@ class Token(ds.node.Node):
     def __str__(self):
         return self.string
 
+
 def recalculate_keys(linkedlist, counter, l):
     node = linkedlist.first_node
     while node:
@@ -59,14 +61,16 @@ def recalculate_keys(linkedlist, counter, l):
         node = node.next_node
     return
 
+
 def segment_document(document, threshold, counter, l):
     tokens = [Token(string=x) for x in document]
-    linkedlist = ds.linkedlist.LinkedList(nodes=tokens)
+    linkedlist = datastruct.LinkedList(nodes=tokens)
     recalculate_keys(linkedlist, counter, l)
-    heap = ds.heap.Heap(nodes=tokens)
+    heap = datastruct.Heap(nodes=tokens)
     while segment_once(heap, threshold):
         pass
     return [x.string for x in linkedlist]
+
 
 def segment_once(heap, threshold):
     max_node = heap.pop_heap()
