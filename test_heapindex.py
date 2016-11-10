@@ -1,5 +1,5 @@
-import datastruct as ds
-import phrase_mining as pm
+from topmine import datastruct as ds
+from topmine import phrase_mining as pm
 import pdb
 import random
 import math
