@@ -95,8 +95,7 @@ def segment_once(heap, threshold, counter, l):
 
 def topmine_tokenizer(corpus, threshold, min_support):
     '''
-    corpus is a list of pre-tokenized strings:w
-
+    corpus is a list of pre-tokenized strings
     '''
     l = sum([len(x) for x in corpus])
     counter = phrase_frequency(corpus, min_support)
@@ -111,15 +110,3 @@ def _significance(a, b, counter, l):
         return (ab - (counter[a] * counter[b]) / l) / math.sqrt(ab)
     else:
         return -math.inf
-
-if __name__ == '__main__':
-    corpus = [x.split(' ') for x in
-        ['hola soy danny',
-         'hola soy edson',
-         'hola soy johnson',
-         'hola soy ronson',
-         'hola soy jason',
-         'hola soy randy'
-        ]]
-    counter = phrase_frequency(corpus, min_support=0)
-    print(counter)
