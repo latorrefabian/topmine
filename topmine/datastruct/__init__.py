@@ -1,3 +1,3 @@
-from datastruct.node import Node
-from datastruct.linkedlist import LinkedList
-from datastruct.heap import Heap
+from .node import Node
+from .linkedlist import LinkedList
+from .heap import Heap

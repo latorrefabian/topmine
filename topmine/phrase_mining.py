@@ -3,7 +3,7 @@ from collections import Counter
 from itertools import chain
 import copy
 import math
-import datastruct
+from . import datastruct
 
 
 def phrase_frequency(corpus, min_support):

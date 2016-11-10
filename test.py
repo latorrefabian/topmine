@@ -1,6 +1,6 @@
 import re
 import string
-import phrase_mining as pm
+from topmine import phrase_mining as pm
 import argparse
 import pickle
 
