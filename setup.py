@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='topmine',
-      version='0.2.4',
+      version='0.2.5',
       description='topmine python implementation',
       author='Fabian Latorre',
       author_email='latorrefabian@gmail.com',
