@@ -101,7 +101,7 @@ def topmine_tokenizer(corpus, threshold, min_support):
     counter = phrase_frequency(corpus, min_support)
     def tokenize(document):
         return segment_document(document, threshold, counter, l)
-    return tokenize, counter.keys()
+    return tokenize, [key for key in counter.keys()]
 
 
 def _significance(a, b, counter, l):
