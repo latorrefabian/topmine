@@ -1,4 +1,5 @@
 from topmine import corpus
+import pdb
 import os
 
 mini_corpus = [
