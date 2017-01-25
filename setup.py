@@ -9,4 +9,5 @@ setup(name='topmine',
       author_email='latorrefabian@gmail.com',
       url='',
       packages=['topmine'],
+      install_requires=['py>=1.4'],
 )
