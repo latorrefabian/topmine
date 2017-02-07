@@ -8,9 +8,10 @@ import pickle
 class Corpus(object):
     '''Memory Friendly Corpus Reader'''
 
-    def __init__(self, files, type):
+    def __init__(self, name, files, type):
         if type != 'text' and type != 'bytes':
             raise ValueError('type not recognized')
+        self.name
         self.files = files
         self.type = type
         if self.type == 'text':
@@ -31,7 +32,7 @@ class Corpus(object):
     def pop(self, k):
         self.files.pop(k)
 
-    def transform(self, function, output_dir=None, suffix='_t', output_type='text', split=False):
+    def transform(self, name, function, output_dir=None, suffix='_t', output_type='text', split=False):
         '''Transform a corpus with a function
         Args:
             function (callable): function with string as parameter.
@@ -75,7 +76,7 @@ class Corpus(object):
                     _write(obj, tf)
                 transformed_files.append(transformed_file)
 
-        return Corpus(transformed_files, type=output_type)
+        return Corpus(name=name, files=transformed_files, type=output_type)
 
 
 def phrase_frequency(corpus, min_support):
