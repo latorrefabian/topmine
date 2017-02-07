@@ -11,7 +11,7 @@ class Corpus(object):
     def __init__(self, name, files, type):
         if type != 'text' and type != 'bytes':
             raise ValueError('type not recognized')
-        self.name
+        self.name = name
         self.files = files
         self.type = type
         if self.type == 'text':
