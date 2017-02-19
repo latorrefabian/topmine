@@ -13,6 +13,30 @@ NORMALIZE_PUNCT_TABLE = str.maketrans(
         string.punctuation, '.' * len(string.punctuation))
 REMOVE_PUNCT_TABLE = str.maketrans(
             string.punctuation, ' ' * len(string.punctuation))
+
+
+def to_ascii(s):
+    '''Taken from sklearn.feature_extraction.text'''
+    nkfd_form = unicodedata.normalize('NFKD', s)
+    only_ascii = nkfd_form.encode('ASCII', 'ignore')
+    return only_ascii
+
+
+def strip_tags(s):
+    '''Taken from sklearn.feature_extraction.text'''
+    return re.compile(r'<([^>]+)>', flags=re.UNICODE).sub('', s)
+
+
+class RomanPreprocessor(object):
+    '''Taken from sklearn.feature_extraction.text'''
+
+    def preprocess(self, unicode_text):
+        '''Preprocess strings'''
+        return to_ascii(strip_tags(unicode_text.lower()))
+
+    def __repr__(self):
+        return 'RomanPreprocessor()'
+
 DEFAULT_PREPROCESSOR = RomanPreprocessor()
 
 class Corpus(object):
@@ -203,6 +227,7 @@ class TopmineTokenizer(object):
         else:
             return math.inf
 
+
 def phrase_frequency(sentences, min_support):
     '''Calculates counter with frequent phrases
     Args:
@@ -236,24 +261,3 @@ def enumerate_backwards(array):
         yield i, x
 
 
-def to_ascii(s):
-    '''Taken from sklearn.feature_extraction.text'''
-    nkfd_form = unicodedata.normalize('NFKD', s)
-    only_ascii = nkfd_form.encode('ASCII', 'ignore')
-    return only_ascii
-
-
-def strip_tags(s):
-    '''Taken from sklearn.feature_extraction.text'''
-    return re.compile(r'<([^>]+)>', flags=re.UNICODE).sub('', s)
-
-
-class RomanPreprocessor(object):
-    '''Taken from sklearn.feature_extraction.text'''
-
-    def preprocess(self, unicode_text):
-        '''Preprocess strings'''
-        return to_ascii(strip_tags(unicode_text.lower()))
-
-    def __repr__(self):
-        return 'RomanPreprocessor()'
