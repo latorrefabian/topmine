@@ -1,3 +1,5 @@
+from __future__ import (absolute_import, division,
+                        print_function, unicode_literals)
 import os
 import tempfile
 import string
@@ -11,6 +13,7 @@ from heapq import heappush, heappop, heapify
 
 NORMALIZE_PUNCT_TABLE = str.maketrans(
         string.punctuation, '.' * len(string.punctuation))
+
 REMOVE_PUNCT_TABLE = str.maketrans(
             string.punctuation, ' ' * len(string.punctuation))
 
