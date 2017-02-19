@@ -7,7 +7,6 @@ import pickle
 
 class Corpus(object):
     '''Memory Friendly Corpus Reader'''
-
     def __init__(self, name, files, type):
         if type != 'text' and type != 'bytes':
             raise ValueError('type not recognized')
@@ -32,10 +31,11 @@ class Corpus(object):
     def pop(self, k):
         self.files.pop(k)
 
-    def transform(self, name, function, output_dir=None, suffix='_t', output_type='text', split=False):
+    def transform(self, name, function, output_dir=None, suffix='', output_type='text', split=False):
         '''Transform a corpus with a function
         Args:
-            function (callable): function with string as parameter.
+            name (str): additional info of the corpus
+            function (callable): function with one parameter.
             output_dir (str): path to folder where the transformed files
                 will be stored.
             suffix (str): will be appended to the filenames.
@@ -79,14 +79,14 @@ class Corpus(object):
         return Corpus(name=name, files=transformed_files, type=output_type)
 
 
-def phrase_frequency(corpus, min_support):
+def phrase_frequency(corpus, min_support, preprocessor=lambda x: x):
     '''Calculates counter with frequent phrases
     Args:
         corpus (Corpus): preprocessed corpus, that is, it is assumed that
             tokens are whitespace separated.
     '''
     temp_dir = tempfile.TemporaryDirectory()
-    corpus = corpus.transform(lambda x: x.split(' '), output_dir=temp_dir,
+    corpus = corpus.transform(lambda x: preprocessor(x).split(), output_dir=temp_dir,
             output_type='bytes')
     indices = [range(len(document)) for document in corpus]
     counter = Counter(chain.from_iterable(corpus))
