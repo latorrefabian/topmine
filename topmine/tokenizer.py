@@ -20,7 +20,7 @@ REMOVE_PUNCT_TABLE = str.maketrans(
 
 
 def to_ascii(s):
-    '''Taken from sklearn.feature_extraction.text'''
+    '''Adapted from sklearn.feature_extraction.text'''
     nkfd_form = unicodedata.normalize('NFKD', s)
     only_ascii = nkfd_form.encode('ASCII', 'ignore').decode('ASCII')
     return only_ascii
@@ -73,8 +73,9 @@ class TopmineTokenizer(object):
 
 
     def transform_sentence(self, sentence):
-        '''Given a sentence, return it as a sequence of
-        significant phrases, using the cost function
+        '''Given a sentence, encoded as a list of integers using
+        the vocabulary_map, return it as a sequence of
+        significant phrases.
         '''
         phrases = [(x,) for x in sentence]
         phrase_start = [x for x in range(len(phrases))]
@@ -82,21 +83,21 @@ class TopmineTokenizer(object):
 
         costs = [(self.cost(phrases[i], phrases[i + 1]), i, i + 1, 2)
                 for i in range(len(phrases) - 1)]
-        costs = heapify(costs)
+        heapify(costs)
 
         while True and len(costs) > 0:
             # a = phrase a, b = phrase b
             # i_a = phrase a index, i_b = phrase b index
             # phrase_start[x] = x means that a phrase starts at that position
-            cost, a, b, i_a, i_b, length = heappop(costs)
+            cost, i_a, i_b, length = heappop(costs)
 
-            if cost > self.threshold:
+            if cost > -self.threshold:
                 break
             if phrase_start[i_a] != i_a:
                 continue
             if phrase_start[i_b] != i_b:
                 continue
-            if length != len(a + b):
+            if length != len(phrases[i_a] + phrases[i_b]):
                 continue
 
             phrase_start[i_b] = i_a
@@ -176,7 +177,7 @@ def phrase_frequency(sentences, min_support):
         for i, sentence in enumerate_backwards(sentences):
             indices[i] = [
                     j for j in indices[i]
-                    if counter[tuple(sentence[j: j+n])] > min_support]
+                    if counter[tuple(sentence[j: j+n])] >= min_support]
             if len(indices[i]) == 0:
                 indices.pop(i)
                 sentences.pop(i)
@@ -195,5 +196,4 @@ def enumerate_backwards(array):
     '''
     for i, x in zip(range(len(array)-1, -1, -1), reversed(array)):
         yield i, x
-
 

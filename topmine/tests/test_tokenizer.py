@@ -49,10 +49,18 @@ def test_fit(corpus):
     assert isinstance(tokenizer.counter, Counter)
 
 def test_transform_document(tokenizer):
-    pass
+    phrases = tokenizer.transform_document(
+            'machine. learning support vector Machines: this is iRrelevant')
+    assert isinstance(phrases, list)
+    assert phrases == ['machine', 'learning', 'support vector machines',
+            'this', 'is', 'irrelevant']
 
 def test_transform_sentence(tokenizer):
-    pass
+    phrases = tokenizer.transform_sentence(
+            [0, 1, 2, 3, 4, 5, 6, 7])
+    assert isinstance(phrases, list)
+    assert phrases == ['machine learning', 'support vector machines',
+            'this', 'is', 'irrelevant']
 
 def test_corpus_to_list(tokenizer, simple_corpus):
     sentences = tokenizer.corpus_to_list(simple_corpus)
@@ -78,6 +86,7 @@ def test_cost(tokenizer):
 
 
 def test_phrase_frequency():
+    # TO DO
     pass
 
 def test_enumerate_backwards():
