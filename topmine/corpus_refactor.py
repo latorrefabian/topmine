@@ -20,12 +20,19 @@ class Corpus(object):
         else:
             self.cached = False
 
+    @staticmethod
+    def _document(file):
+        with open(file, 'r') as f:
+            return f.read()
+
+    def __getitem__(self, item):
+        return self._document(self.files[item])
 
     def __iter__(self):
         if not self.cached:
             for file in self.files:
-                with open(file, 'r') as f:
-                    yield f.read()
+                self._document(file)
+
         else:
             for document in self.documents:
                 yield document
