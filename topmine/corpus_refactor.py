@@ -31,7 +31,7 @@ class Corpus(object):
     def __iter__(self):
         if not self.cached:
             for file in self.files:
-                self._document(file)
+                yield self._document(file)
 
         else:
             for document in self.documents:
