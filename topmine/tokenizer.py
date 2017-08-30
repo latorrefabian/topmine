@@ -25,11 +25,9 @@ def to_ascii(s):
     only_ascii = nkfd_form.encode('ASCII', 'ignore').decode('ASCII')
     return only_ascii
 
-
 def strip_tags(s):
     '''Taken from sklearn.feature_extraction.text'''
     return re.compile(r'<([^>]+)>', flags=re.UNICODE).sub('', s)
-
 
 class RomanPreprocessor(object):
     '''Taken from sklearn.feature_extraction.text'''
@@ -40,9 +38,7 @@ class RomanPreprocessor(object):
     def __repr__(self):
         return 'RomanPreprocessor()'
 
-
 DEFAULT_PREPROCESSOR = RomanPreprocessor()
-
 
 class TopmineTokenizer(object):
     def __init__(self, preprocessor=DEFAULT_PREPROCESSOR,
@@ -164,7 +160,6 @@ class TopmineTokenizer(object):
         else:
             return math.inf
 
-
 def phrase_frequency(sentences, min_support):
     '''Calculates counter with frequent phrases
     Args:
@@ -188,7 +183,6 @@ def phrase_frequency(sentences, min_support):
             indices[i].pop()
         n = n + 1
     return counter
-
 
 def enumerate_backwards(array):
     '''Generate indices and elements of an array from last to first

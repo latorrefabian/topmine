@@ -3,11 +3,10 @@
 from distutils.core import setup
 
 setup(name='topmine',
-      version='0.3.2',
-      description='topmine python implementation',
+      version='0.0.1',
+      description='frequent phrase mining algorithm',
       author='Fabian Latorre',
       author_email='latorrefabian@gmail.com',
       url='',
       packages=['topmine'],
-      install_requires=['py>=1.4'],
 )
